@@ -121,16 +121,19 @@
             updateCountdown();
         }
 
-        // Function to get the user's country based on their IP address
+        // Function to get the user's country based on their IP address using ipinfo.io
         async function getUserCountry() {
             const locationElement = document.getElementById("userLocation");
 
             try {
-                // Fetch the user's country using an IP-based geolocation service
-                const response = await fetch("https://ipapi.co/json/");
+                // Fetch the user's country using ipinfo.io
+                const response = await fetch("https://ipinfo.io/json?token=66f28dec47e92e"); // Remplacez YOUR_TOKEN par votre token ipinfo.io
                 const data = await response.json();
-                const country = data.country_name;
-                locationElement.textContent = country;
+                const country = data.country; // ipinfo.io retourne le code pays (ex: "FR"), pas le nom complet
+                
+                // Optionnel : convertir le code pays en nom complet (ex: "FR" → "France")
+                const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(country);
+                locationElement.textContent = countryName;
             } catch (error) {
                 console.error("Error fetching location data:", error);
                 // If the request fails, leave the location blank
