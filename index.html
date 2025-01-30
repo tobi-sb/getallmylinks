@@ -203,6 +203,11 @@
 
             getUserCountry();
         };
+
+        document.querySelector('video').addEventListener('loadeddata', function () {
+            document.getElementById('loader').style.opacity = '0';
+            document.getElementById('loader').style.visibility = 'hidden';
+        });
     </script>
 </body>
 </html>
