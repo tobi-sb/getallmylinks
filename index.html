@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-    </noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
 
@@ -73,10 +70,51 @@
                 margin-top: 50px;
             }
         }
+
+        /* Styles pour le loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* Fond noir */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* S'assure que le loader est au-dessus de tout */
+        }
+
+        .loader-spinner {
+            border: 4px solid #e02fc3; /* Couleur du spinner */
+            border-top: 4px solid transparent; /* Transparent pour l'effet de rotation */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite; /* Animation de rotation */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Masquer le loader une fois la page chargée */
+        body.loaded #loader {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
     </style>
 </head>
 <body>
-    <img style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" src="./photo_2025-01-29_23-33-50.jpg" alt="" loading="lazy">
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Contenu de la page -->
+    <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" poster="./video-capture-t0000.00seg-2269.png" src="https://test-tobi.s3.eu-north-1.amazonaws.com/1.MOV" autoplay loop muted playsinline preload="auto"></video>
     <section class="section_responsive" style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;">
         <img style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" src="./photo_2025-01-29_23-33-50.jpg" alt="">
         <h4 style="font-size: 2rem; font-weight: bold; color: white; margin: 0;">Bianca 💘</h1>
@@ -108,6 +146,12 @@
     </section>
 
     <script>
+        // Masquer le loader après le chargement de la page
+        window.addEventListener('load', function () {
+            document.getElementById('loader').style.opacity = '0';
+            document.getElementById('loader').style.visibility = 'hidden';
+        });
+
         // Function to start the countdown
         function startCountdown(durationInSeconds, displayElement) {
             let remainingTime = durationInSeconds;
