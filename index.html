@@ -4,108 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="styles.css">
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Désactive le scroll */
-            height: 100%; /* Assure que le body prend toute la hauteur */
-        }
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 20px #e02fc3;
-            }
-            50% {
-                box-shadow: 0 0 40px #e02fc3, 0 0 80px #e02fc3;
-            }
-            100% {
-                box-shadow: 0 0 20px #e02fc3;
-            }
-        }
-
-        .section_responsive{
-            margin-top: 100px;
-        }
-
-        .button {
-            background-color: #e02fc3;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        @media (max-width: 380px) {
-            .div_responsive {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .idc1 {
-                margin-top: 10px;
-            }
-
-            .idc {
-                margin-bottom: 10px;
-            }
-            .section_responsive{
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            .section_responsive{
-                margin-top: 50px;
-            }
-        }
-
-        /* Styles pour le loader */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000; /* Fond noir */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; /* S'assure que le loader est au-dessus de tout */
-        }
-
-        .loader-spinner {
-            border: 4px solid #e02fc3; /* Couleur du spinner */
-            border-top: 4px solid transparent; /* Transparent pour l'effet de rotation */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite; /* Animation de rotation */
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Masquer le loader une fois la page chargée */
-        body.loaded #loader {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-    </style>
+   
 </head>
 <body>
     <!-- Loader -->
@@ -114,7 +19,7 @@
     </div>
 
     <!-- Contenu de la page -->
-    <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" poster="./video-capture-t0000.00seg-2269.png" src="https://test-tobi.s3.eu-north-1.amazonaws.com/1.MOV" autoplay loop muted playsinline preload="auto"></video>
+    <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" poster="./video-capture-t0000.00seg-2269.png" src="https://test-tobi.s3.eu-north-1.amazonaws.com/1.MOV" autoplay loop muted playsinline preload="metadata"></video>
     <section class="section_responsive" style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;">
         <img style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" src="./photo_2025-01-29_23-33-50.jpg" alt="">
         <h4 style="font-size: 2rem; font-weight: bold; color: white; margin: 0;">Bianca 💘</h1>
@@ -142,70 +47,6 @@
         </div>
     </section>
 
-    <script>
-        // Masquer le loader dès que la vidéo est prête
-        document.querySelector('video').addEventListener('loadeddata', function () {
-            document.getElementById('loader').style.opacity = '0';
-            document.getElementById('loader').style.visibility = 'hidden';
-        });
-
-        // Masquer le loader après un délai maximum (5 secondes)
-        setTimeout(function () {
-            document.getElementById('loader').style.opacity = '0';
-            document.getElementById('loader').style.visibility = 'hidden';
-        }, 5000); // 5000 ms = 5 secondes
-
-        // Function to start the countdown
-        function startCountdown(durationInSeconds, displayElement) {
-            let remainingTime = durationInSeconds;
-    
-            function updateCountdown() {
-                let minutes = Math.floor(remainingTime / 60);
-                let seconds = remainingTime % 60;
-    
-                // Format seconds to always display 2 digits (e.g., 4s → 04s)
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-                displayElement.textContent = `ends in ${minutes}m ${seconds}s`;
-    
-                if (remainingTime > 0) {
-                    remainingTime--; // Decrement the timer
-                    setTimeout(updateCountdown, 1000); // Update every second
-                } else {
-                    displayElement.textContent = "Offer expired"; // Message when the timer reaches 0
-                }
-            }
-    
-            updateCountdown();
-        }
-
-        // Function to get the user's country based on their IP address using ipinfo.io
-        async function getUserCountry() {
-            const locationElement = document.getElementById("userLocation");
-
-            try {
-                // Fetch the user's country using ipinfo.io
-                const response = await fetch("https://ipinfo.io/json?token=66f28dec47e92e"); // Remplacez YOUR_TOKEN par votre token ipinfo.io
-                const data = await response.json();
-                const country = data.country; // ipinfo.io retourne le code pays (ex: "FR"), pas le nom complet
-                
-                // Optionnel : convertir le code pays en nom complet (ex: "FR" → "France")
-                const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(country);
-                locationElement.textContent = countryName;
-            } catch (error) {
-                console.error("Error fetching location data:", error);
-                // If the request fails, leave the location blank
-                locationElement.textContent = "";
-            }
-        }
-
-        // Start the countdown and fetch the user's country when the page loads
-        window.onload = function () {
-            let countdownElement = document.getElementById("countdown");
-            startCountdown(300, countdownElement);
-
-            getUserCountry();
-        };
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>

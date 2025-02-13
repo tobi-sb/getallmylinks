@@ -1,0 +1,96 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Désactive le scroll */
+    height: 100%; /* Assure que le body prend toute la hauteur */
+}
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 20px #e02fc3;
+    }
+    50% {
+        box-shadow: 0 0 40px #e02fc3, 0 0 80px #e02fc3;
+    }
+    100% {
+        box-shadow: 0 0 20px #e02fc3;
+    }
+}
+
+.section_responsive{
+    margin-top: 100px;
+}
+
+.button {
+    background-color: #e02fc3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    animation: glow 2s ease-in-out infinite;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 380px) {
+    .div_responsive {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .idc1 {
+        margin-top: 10px;
+    }
+
+    .idc {
+        margin-bottom: 10px;
+    }
+    .section_responsive{
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .section_responsive{
+        margin-top: 50px;
+    }
+}
+
+/* Styles pour le loader */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* Fond noir */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* S'assure que le loader est au-dessus de tout */
+}
+
+.loader-spinner {
+    border: 4px solid #e02fc3; /* Couleur du spinner */
+    border-top: 4px solid transparent; /* Transparent pour l'effet de rotation */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite; /* Animation de rotation */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Masquer le loader une fois la page chargée */
+body.loaded #loader {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
